@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Auction System</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #eee;
+            font-family: monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: gold;
+            font-family: 'Brush Script MT', cursive;
+            margin-bottom: 20px;
+            font-size: 36px;
+        }
+        pre {
+            color: gold;
+            font-size: 10px;
+            text-align: center;
+        }
+        form {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            width: 300px;
+            box-shadow: 0 0 10px #000;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            width: 100%;
+        }
+        button {
+            background: gold;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .msg {
+            margin-top: 15px;
+            color: lightgreen;
+        }
+        table {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #000;
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 400px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #555;
+        }
+        th {
+            background: gold;
+            color: black;
+        }
+        .highlight {
+            color: lightgreen;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Online Auction System</h1>
+
+    <pre>{{ logo }}</pre>
+
+    {% if not view_result %}
+    <form action="/" method="post">
+        <input type="text" name="name" placeholder="Enter Your Name" required>
+        <input type="number" name="bid" placeholder="Enter Your Bid ($)" required>
+        <button type="submit">Submit Bid</button>
+    </form>
+
+    <form action="/" method="post">
+        <button type="submit" name="view">View Auction Result</button>
+    </form>
+
+    {% if message %}
+        <div class="msg">{{ message }}</div>
+    {% endif %}
+    {% endif %}
+
+    {% if view_result %}
+        <table>
+            <tr>
+                <th>Bidder</th>
+                <th>Bid Amount ($)</th>
+            </tr>
+            {% for bidder, bid in sorted_bidders %}
+            <tr {% if bidder == highest_bidder %} class="highlight" {% endif %}>
+                <td>{{ bidder }}</td>
+                <td>{{ bid }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <form action="/" method="get">
+            <button type="submit">Back to Bidding</button>
+        </form>
+    {% endif %}
+
+</body>
+</html>
